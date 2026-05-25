@@ -21,6 +21,10 @@ public class CartItem {
         quantity = quantity + 1;
     }
 
+    public boolean isValidForPayment() {
+        return product != null && quantity > 0;
+    }
+
     public double getSubtotal() {
         return product.getPrice() * quantity;
     }

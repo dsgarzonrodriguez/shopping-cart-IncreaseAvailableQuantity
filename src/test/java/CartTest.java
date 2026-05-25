@@ -59,4 +59,16 @@ public class CartTest {
         assertTrue(cart.getItems().isEmpty());
         assertEquals(0.0, cart.getTotal());
     }
+
+    @Test
+    public void testIsReadyForPayment() {
+        Cart cart = new Cart();
+        Product product = new Product(1, "Leche", 2000.0, 10);
+
+        assertFalse(cart.isReadyForPayment());
+
+        cart.addProduct(product);
+
+        assertTrue(cart.isReadyForPayment());
+    }
 }

@@ -54,4 +54,24 @@ public class Cart {
 
         return total;
     }
+
+    public boolean isReadyForPayment() {
+        if (items.isEmpty()) {
+            return false;
+        }
+
+        int i;
+
+        for (i = 0; i < items.size(); i++) {
+            if (!items.get(i).isValidForPayment()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void clearCart() {
+        items.clear();
+    }
 }

@@ -9,9 +9,11 @@ import isi.shoppingCart.infrastructure.repositories.InMemoryCartRepository;
 import isi.shoppingCart.infrastructure.repositories.InMemoryCustomerRepository;
 import isi.shoppingCart.infrastructure.repositories.InMemoryProductRepository;
 import isi.shoppingCart.infrastructure.repositories.InMemoryPurchaseRepository;
+import isi.shoppingCart.infrastructure.services.ServicioPagoSimulado;
 import isi.shoppingCart.usecases.dto.OperationResult;
 import isi.shoppingCart.usecases.ports.CartRepository;
 import isi.shoppingCart.usecases.ports.CustomerRepository;
+import isi.shoppingCart.usecases.ports.IServicioPago;
 import isi.shoppingCart.usecases.ports.ProductRepository;
 import isi.shoppingCart.usecases.ports.PurchaseRepository;
 import java.util.List;
@@ -21,6 +23,7 @@ public class ShoppingCartApp {
     private CartRepository cartRepository;
     private CustomerRepository customerRepository;
     private PurchaseRepository purchaseRepository;
+    private IServicioPago servicioPago;
     private AgregarProductoAlCarritoUseCase agregarProductoAlCarritoUseCase;
     private ConfirmarCompraUseCase confirmarCompraUseCase;
     private IncreaseAvailableQuantityUseCase increaseAvailableQuantityUseCase;
@@ -30,8 +33,9 @@ public class ShoppingCartApp {
         cartRepository = new InMemoryCartRepository();
         customerRepository = new InMemoryCustomerRepository();
         purchaseRepository = new InMemoryPurchaseRepository();
+        servicioPago = new ServicioPagoSimulado(3000.0);
         agregarProductoAlCarritoUseCase = new AgregarProductoAlCarritoUseCase(productRepository, cartRepository);
-        confirmarCompraUseCase = new ConfirmarCompraUseCase(cartRepository, customerRepository, purchaseRepository, productRepository);
+        confirmarCompraUseCase = new ConfirmarCompraUseCase(cartRepository, customerRepository, purchaseRepository, productRepository, servicioPago);
         increaseAvailableQuantityUseCase = new IncreaseAvailableQuantityUseCase(productRepository);
 
         cargarDatosIniciales();

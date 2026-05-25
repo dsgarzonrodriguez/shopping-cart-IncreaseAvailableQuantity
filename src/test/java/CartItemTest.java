@@ -38,4 +38,13 @@ public class CartItemTest {
 
         assertEquals(6000.0, item.getSubtotal());
     }
+
+    @Test
+    public void testIsValidForPayment() {
+        Product product = new Product(1, "Leche", 2000.0, 10);
+
+        assertTrue(new CartItem(product, 1).isValidForPayment());
+        assertFalse(new CartItem(product, 0).isValidForPayment());
+        assertFalse(new CartItem(null, 1).isValidForPayment());
+    }
 }
